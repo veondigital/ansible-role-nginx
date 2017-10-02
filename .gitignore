@@ -1,2 +1,8 @@
+.gitignore
+.v
 *.retry
-tests/test.sh
+*.swp
+**/.DS_Store
+*.swp
+*.swo
+.vagrant
