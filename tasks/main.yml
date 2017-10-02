@@ -12,10 +12,10 @@
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- include: setup-Ubuntu.yml
+- include: setup-OpenAM.yml
   when: ansible_distribution == 'Ubuntu'
 
-- include: setup-Debian.yml
+- include: setup-OpenAM.yml
   when: ansible_os_family == 'Debian'
 
 - include: setup-FreeBSD.yml
