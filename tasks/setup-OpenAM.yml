@@ -30,6 +30,8 @@
   apt_repository:
     repo: "{{ nginx_official_repo }}"
     state: present
+# ToDo:
+# when file doesn't exist
 
 - name: Install Nginx version needed for OpenAM module
   apt:
@@ -42,3 +44,5 @@
   command: "nginx -t -c {{ nginx_conf_file_path }}"
   notify:
   - restart nginx
+# ToDo:
+# Add when not openam
