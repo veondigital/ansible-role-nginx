@@ -8,8 +8,11 @@ nginx_official_repo: "deb http://nginx.org/packages/mainline/ubuntu/ xenial ngin
 # Nginx Official repo key id
 nginx_official_key: "ABF5BD827BD9BF62"
 
+# version of Nginx to install
+nginx_version: "1.11.10-1~xenial"
+
 # Used only for Debian/Ubuntu installation, as the -t option for apt.
-nginx_default_release: "1.11.10-1~xenial"
+nginx_default_release: ""
 
 # Used only for Redhat installation, enables source Nginx repo.
 nginx_yum_repo_enabled: true

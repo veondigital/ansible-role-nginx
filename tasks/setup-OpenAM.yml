@@ -33,7 +33,7 @@
 
 - name: Install Nginx version needed for OpenAM module
   apt:
-    name: "{{ nginx_package_name }}"
+    name: "{{ nginx_package_name }}={{nginx_version }}"
     update_cache: yes
     state: installed
     default_release: "{{ nginx_default_release }}"
