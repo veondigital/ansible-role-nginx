@@ -40,6 +40,19 @@
     mode: 0644
   notify:
     - reload nginx
+  when: not openam_enabled
+
+# Nginx setup for OpenAM
+- name: Copy nginx including OpenAM module configuration in place.
+  template:
+    src: "{{ nginx_conf_openam_template }}"
+    dest: "{{ nginx_conf_file_path }}"
+    owner: root
+    group: "{{ root_group }}"
+    mode: 0644
+  notify:
+    - reload nginx
+  when: openam_enabled
 
 - name: Ensure nginx is started and enabled to start at boot.
   service: name=nginx state=started enabled=yes
