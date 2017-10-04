@@ -1,41 +1,24 @@
-- name: Remove Nginx if it exists
-  action: apt pkg={{ item }} state=absent
-  with_items:
-       - nginx-core
-       - nginx
-       - nginx-common
-# ToDo:
-# add when: only version different then {{ nginx_default_release }}
+- name: Check if official Nginx (mainline) APT repository exists
+  stat:
+    path: /etc/apt/sources.list.d/nginx_org_packages_mainline_ubuntu.list
+  register: repo_result
 
-- name: error fix - nginx.service is masked
-  command: systemctl unmask nginx.service
-# ToDO:
-# add when: nginx was removed
-
-# This step can be removed
-#- name: Ensure vhost locations for Nginx exists
-#  file:
-#    path: "{{ item }}"
-#    state: directory
-#  with_items:
-#    - /etc/nginx/sites-available/
-#    - /etc/nginx/sites-enabled/
-
-- name: Add official Nginx repository GPG key
+- name: Add official Nginx (mainline) APT repository GPG key
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: "{{ nginx_official_key }}"
+    state: present
+  when: repo_result.stat.exists == False
 
-- name: Official Nginx (mainline) APT repository
+- name: Add official Nginx (mainline) APT repository
   apt_repository:
     repo: "{{ nginx_official_repo }}"
     state: present
-# ToDo:
-# when file doesn't exist
+  when: repo_result.stat.exists == False
 
 - name: Install Nginx version needed for OpenAM module
   apt:
     name: "{{ nginx_package_name }}={{nginx_version }}"
     update_cache: yes
     state: installed
-    default_release: "{{ nginx_default_release }}"
+    force: yes
